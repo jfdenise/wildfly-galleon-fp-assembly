@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+~ JBoss, Home of Professional Open Source.
+~ Copyright 2010, Red Hat, Inc., and individual contributors
+~ as indicated by the @author tags. See the copyright.txt file in the
+~ distribution for a full listing of individual contributors.
+~
+~ This is free software; you can redistribute it and/or modify it
+~ under the terms of the GNU Lesser General Public License as
+~ published by the Free Software Foundation; either version 2.1 of
+~ the License, or (at your option) any later version.
+~
+~ This software is distributed in the hope that it will be useful,
+~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+~ Lesser General Public License for more details.
+~
+~ You should have received a copy of the GNU Lesser General Public
+~ License along with this software; if not, write to the Free
+~ Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+~ 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+-->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.wildfly</groupId>
+    <artifactId>wildfly-ee-feature-pack-assembly-parent</artifactId>
+    <description>Parent for building ee Galleon feature-pack and dist</description>
+    <packaging>pom</packaging>
+    <version>22.0.9.Final-SNAPSHOT</version>
+    
+    <properties>
+        <ee.dist.product.release.name>WildFly Full (built from assembly)</ee.dist.product.release.name>
+        <ee.dist.product.release.version>${project.version}</ee.dist.product.release.version>
+        <server.output.dir.prefix>wildfly</server.output.dir.prefix>
+        <server.output.dir.version>${project.version}</server.output.dir.version>
+        <version.org.wildfly>22.0.0.Final-SNAPSHOT</version.org.wildfly>
+        <version.org.wildfly.core>14.0.0.Beta4</version.org.wildfly.core>
+        <version.org.wildfly.galleon-plugins>5.0.0.Final</version.org.wildfly.galleon-plugins>
+        <version.org.jboss.galleon>4.2.7.Final</version.org.jboss.galleon>
+        <version.org.wildfly.common>1.5.2.Final</version.org.wildfly.common>
+        <galleon.fork.embedded>true</galleon.fork.embedded>
+        
+    </properties>
+    <modules>
+        <module>galleon-feature-pack</module>
+        <module>ee-dist</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- must import before wildfy-core, wildfly-core defines some managed dependencies with scope test that breaks building FP. -->
+            <dependency>
+                <groupId>org.wildfly</groupId>
+                <artifactId>wildfly-parent</artifactId>
+                <version>${version.org.wildfly}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.wildfly.core</groupId>
+                <artifactId>wildfly-core-parent</artifactId>
+                <version>${version.org.wildfly.core}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            
+            <!-- needed by dist -->
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>wildfly-ee-galleon-pack</artifactId>
+                <version>${project.version}</version>
+                <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>wildfly-ee-galleon-pack</artifactId>
+                <version>${project.version}</version>
+                <type>zip</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.jboss.galleon</groupId>
+                    <artifactId>galleon-maven-plugin</artifactId>
+                    <version>${version.org.jboss.galleon}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.wildfly.galleon-plugins</groupId>
+                    <artifactId>wildfly-galleon-maven-plugin</artifactId>
+                    <version>${version.org.wildfly.galleon-plugins}</version>
+                    <dependencies>
+                        <!-- feature-spec-gen uses wildfly-embedded to generate the feature specs, hence the designated wildfly-embedded version must match the pack one -->
+                        <dependency>
+                            <groupId>org.wildfly.core</groupId>
+                            <artifactId>wildfly-embedded</artifactId>
+                            <version>${version.org.wildfly.core}</version>
+                        </dependency>
+                        <!-- If you add a dependency on wildfly-embedded you need to bring your own transitives -->
+                        <dependency>
+                            <groupId>org.wildfly.common</groupId>
+                            <artifactId>wildfly-common</artifactId>
+                            <version>${version.org.wildfly.common}</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+</project>
