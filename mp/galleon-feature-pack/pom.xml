@@ -293,6 +293,7 @@
                                                 <!-- Ignore the shared resource poms as those we want their
                                                      transitives. Those poms ban transitives at their level -->
                                                 <exclude>${full.maven.groupId}:wildfly-mp-feature-pack-galleon-common</exclude>
+                                                <exclude>${full.maven.groupId}:wildfly-feature-pack-galleon-content</exclude>
                                             </excludes>
                                         </banTransitiveDependencies>
                                     </rules>
