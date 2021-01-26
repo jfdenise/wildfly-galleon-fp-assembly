@@ -29,7 +29,7 @@
 
     <parent>
         <groupId>org.wildfly</groupId>
-        <artifactId>wildfly-ee-feature-pack-assembly-parent</artifactId>
+        <artifactId>wildfly-feature-pack-assembly-parent</artifactId>
         <!--
         Maintain separation between the artifact id and the version to help prevent
         merge conflicts between commits changing the GA and those changing the V.
@@ -37,20 +37,20 @@
         <version>23.0.9.Final-SNAPSHOT</version>
     </parent>
 
-    <artifactId>wildfly-ee-dist</artifactId>
-    <name>WildFly: EE Full Distribution</name>
+    <artifactId>wildfly-dist</artifactId>
+    <name>WildFly: Distribution</name>
     <packaging>jar</packaging>
-    
+
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>wildfly-ee-galleon-pack</artifactId>
+            <artifactId>wildfly-galleon-pack</artifactId>
             <type>pom</type>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>wildfly-ee-galleon-pack</artifactId>
+            <artifactId>wildfly-galleon-pack</artifactId>
             <type>zip</type>
             <exclusions>
                 <exclusion>
@@ -77,19 +77,25 @@
                         <configuration>
                             <install-dir>${basedir}/target/${project.build.finalName}</install-dir>
                             <record-state>false</record-state>
-                            <log-time>false</log-time>
-                            <offline>false</offline>
+                            <log-time>${galleon.log.time}</log-time>
+                            <offline>${galleon.offline}</offline>
                             <plugin-options>
-                                <jboss-fork-embedded>true</jboss-fork-embedded>
+                                <jboss-fork-embedded>${galleon.fork.embedded}</jboss-fork-embedded>
                             </plugin-options>
                             <feature-packs>
                                 <feature-pack>
-                                    <groupId>${project.groupId}</groupId>
+                                    <transitive>true</transitive>
+                                    <groupId>${ee.maven.groupId}</groupId>
                                     <artifactId>wildfly-ee-galleon-pack</artifactId>
-                                    <version>${project.version}</version>
+                                    <version>${ee.maven.version}</version>
                                     <included-packages>
                                         <name>docs.examples.configs</name>
                                     </included-packages>
+                                </feature-pack>
+                                <feature-pack>
+                                    <groupId>${full.maven.groupId}</groupId>
+                                    <artifactId>wildfly-galleon-pack</artifactId>
+                                    <version>${project.version}</version>
                                 </feature-pack>
                             </feature-packs>
                         </configuration>
@@ -122,8 +128,8 @@
                                 <phase>package</phase>
                                 <configuration>
                                     <offline>true</offline>
-                                    <fpGroupId>${project.groupId}</fpGroupId>
-                                    <fpArtifactId>wildfly-ee-galleon-pack</fpArtifactId>
+                                    <fpGroupId>${full.maven.groupId}</fpGroupId>
+                                    <fpArtifactId>wildfly-galleon-pack</fpArtifactId>
                                     <fpVersion>${project.version}</fpVersion>
                                 </configuration>
                             </execution>

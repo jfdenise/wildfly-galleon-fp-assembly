@@ -32,7 +32,7 @@
         Maintain separation between the artifact id and the version to help prevent
         merge conflicts between commits changing the GA and those changing the V.
         -->
-        <version>22.0.9.Final-SNAPSHOT</version>
+        <version>23.0.9.Final-SNAPSHOT</version>
     </parent>
     <artifactId>wildfly-ee-galleon-pack</artifactId>
 
@@ -41,7 +41,18 @@
     <packaging>pom</packaging>
 
     <properties>
+        <core.resources.directory>${basedir}/target/resources-core</core.resources.directory>
+        <servlet.common.resources.directory>${basedir}/target/resources-servlet-common</servlet.common.resources.directory>
+        <servlet.ee-8-api.resources.directory>${basedir}/target/resources-servlet-ee-8-api</servlet.ee-8-api.resources.directory>
+        <servlet.galleon-common.resources.directory>${basedir}/target/resources-servlet-galleon-common</servlet.galleon-common.resources.directory>
+        <servlet.galleon-pruned.resources.directory>${basedir}/target/resources-servlet-galleon-pruned</servlet.galleon-pruned.resources.directory>
         <license.directory>${project.build.directory}/resources/content/docs/licenses</license.directory>
+        <common.resources.directory>${basedir}/target/resources-ee-common</common.resources.directory>
+        <ee-8-api.resources.directory>${basedir}/target/resources-ee-ee-8-api</ee-8-api.resources.directory>
+        <galleon-common.resources.directory>${basedir}/target/resources-ee-galleon-common</galleon-common.resources.directory>
+        <pruned.resources.directory>${basedir}/target/resources-ee-galleon-pruned</pruned.resources.directory>
+        <content.resources.directory>${basedir}/target/resources-ee-galleon-content</content.resources.directory>
+        
     </properties>
 
     <build>
@@ -90,7 +101,7 @@
                                 </artifactItem>
                             </artifactItems>
                             <!-- unpack in a given directory, to erase file timestamps. -->
-                            <outputDirectory>${basedir}/target/resources-core</outputDirectory>
+                            <outputDirectory>${core.resources.directory}</outputDirectory>
                         </configuration>
                     </execution>
                     
@@ -108,7 +119,7 @@
                                     <type>zip</type>
                                 </artifactItem>
                             </artifactItems>
-                            <outputDirectory>${basedir}/target/resources-servlet-common</outputDirectory>
+                            <outputDirectory>${servlet.common.resources.directory}</outputDirectory>
                         </configuration>
                     </execution>
                     
@@ -126,7 +137,7 @@
                                     <type>zip</type>
                                 </artifactItem>
                             </artifactItems>
-                            <outputDirectory>${basedir}/target/resources-servlet-ee-8-api</outputDirectory>
+                            <outputDirectory>${servlet.ee-8-api.resources.directory}</outputDirectory>
                         </configuration>
                     </execution>
                     
@@ -144,7 +155,7 @@
                                     <type>zip</type>
                                 </artifactItem>
                             </artifactItems>
-                            <outputDirectory>${basedir}/target/resources-servlet-galleon-common</outputDirectory>
+                            <outputDirectory>${servlet.galleon-common.resources.directory}</outputDirectory>
                         </configuration>
                     </execution>
                     
@@ -162,7 +173,7 @@
                                     <type>zip</type>
                                 </artifactItem>
                             </artifactItems>
-                            <outputDirectory>${basedir}/target/resources-servlet-pruned</outputDirectory>
+                            <outputDirectory>${servlet.galleon-pruned.resources.directory}</outputDirectory>
                         </configuration>
                     </execution>
                     
@@ -180,7 +191,7 @@
                                     <type>zip</type>
                                 </artifactItem>
                             </artifactItems>
-                            <outputDirectory>${basedir}/target/resources-ee-pruned</outputDirectory>
+                            <outputDirectory>${pruned.resources.directory}</outputDirectory>
                         </configuration>
                     </execution>
                     
@@ -198,7 +209,7 @@
                                     <type>zip</type>
                                 </artifactItem>
                             </artifactItems>
-                            <outputDirectory>${basedir}/target/resources-ee-common</outputDirectory>
+                            <outputDirectory>${common.resources.directory}</outputDirectory>
                         </configuration>
                     </execution>
                     
@@ -216,7 +227,7 @@
                                     <type>zip</type>
                                 </artifactItem>
                             </artifactItems>
-                            <outputDirectory>${basedir}/target/resources-ee-ee-8-api</outputDirectory>
+                            <outputDirectory>${ee-8-api.resources.directory}</outputDirectory>
                         </configuration>
                     </execution>
                     
@@ -234,12 +245,12 @@
                                     <type>zip</type>
                                 </artifactItem>
                             </artifactItems>
-                            <outputDirectory>${basedir}/target/resources-ee-galleon-common</outputDirectory>
+                            <outputDirectory>${galleon-common.resources.directory}</outputDirectory>
                         </configuration>
                     </execution>
                     
                     <execution>
-                        <id>unpack-ee-content-feature-pack-resources</id>
+                        <id>unpack-ee-galleon-content-feature-pack-resources</id>
                         <phase>process-resources</phase>
                         <goals>
                             <goal>unpack</goal>
@@ -252,7 +263,7 @@
                                     <type>zip</type>
                                 </artifactItem>
                             </artifactItems>
-                            <outputDirectory>${basedir}/target/resources-ee-content</outputDirectory>
+                            <outputDirectory>${content.resources.directory}</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>
@@ -271,7 +282,7 @@
                             <outputDirectory>${basedir}/target/resources</outputDirectory>
                             <resources>
                                 <resource>
-                                    <directory>${basedir}/target/resources-core</directory>
+                                    <directory>${core.resources.directory}</directory>
                                 </resource>
                             </resources>
                             <overwrite>true</overwrite>
@@ -287,7 +298,7 @@
                             <outputDirectory>${basedir}/target/resources</outputDirectory>
                             <resources>
                                 <resource>
-                                    <directory>${basedir}/target/resources-servlet-common</directory>
+                                    <directory>${servlet.common.resources.directory}</directory>
                                     <!--<directory>../../../wildfly-brian-no-servlet/servlet-feature-pack/common/src/main/resources/</directory>-->
                                 </resource>
                             </resources>
@@ -304,7 +315,7 @@
                             <outputDirectory>${basedir}/target/resources</outputDirectory>
                             <resources>
                                 <resource>
-                                   <directory>${basedir}/target/resources-servlet-ee-8-api</directory>
+                                   <directory>${servlet.ee-8-api.resources.directory}</directory>
                                    <!--<directory>../../../wildfly-brian-no-servlet/servlet-feature-pack/ee-8-api/src/main/resources/</directory>-->
                                 </resource>
                             </resources>
@@ -321,7 +332,7 @@
                             <outputDirectory>${basedir}/target/resources</outputDirectory>
                             <resources>
                                 <resource>
-                                    <directory>${basedir}/target/resources-servlet-galleon-common</directory>
+                                    <directory>${servlet.galleon-common.resources.directory}</directory>
                                     <!--<directory>../../../wildfly-brian-no-servlet/servlet-feature-pack/galleon-common/src/main/resources/</directory>-->
                                 </resource>
                             </resources>
@@ -338,7 +349,7 @@
                             <outputDirectory>${basedir}/target/resources</outputDirectory>
                             <resources>
                                 <resource>
-                                    <directory>${basedir}/target/resources-servlet-pruned</directory>
+                                    <directory>${servlet.galleon-pruned.resources.directory}</directory>
                                     <!--<directory>../../../wildfly-brian-no-servlet/servlet-feature-pack/galleon-pruned/src/main/resources/</directory>-->
                                 </resource>
                             </resources>
@@ -356,7 +367,7 @@
                             <outputDirectory>${basedir}/target/resources</outputDirectory>
                             <resources>
                                 <resource>
-                                    <directory>${basedir}/target/resources-ee-pruned</directory>
+                                    <directory>${pruned.resources.directory}</directory>
                                     <!--<directory>../../../wildfly-brian-no-servlet/ee-feature-pack/pruned/src/main/resources/</directory>-->
                                 </resource>
                             </resources>
@@ -373,7 +384,7 @@
                             <outputDirectory>${basedir}/target/resources</outputDirectory>
                             <resources>
                                 <resource>
-                                    <directory>${basedir}/target/resources-ee-common</directory>
+                                    <directory>${common.resources.directory}</directory>
                                     <!--<directory>../../../wildfly-brian-no-servlet/ee-feature-pack/common/src/main/resources/</directory>-->
                                 </resource>
                             </resources>
@@ -390,7 +401,7 @@
                             <outputDirectory>${basedir}/target/resources</outputDirectory>
                             <resources>
                                 <resource>
-                                    <directory>${basedir}/target/resources-ee-ee-8-api</directory>
+                                    <directory>${ee-8-api.resources.directory}</directory>
                                     <!--<directory>../../../wildfly-brian-no-servlet/ee-feature-pack/ee-8-api/src/main/resources/</directory>-->
                                 </resource>
                             </resources>
@@ -407,7 +418,7 @@
                             <outputDirectory>${basedir}/target/resources</outputDirectory>
                             <resources>
                                 <resource>
-                                    <directory>${basedir}/target/resources-ee-galleon-common</directory>
+                                    <directory>${galleon-common.resources.directory}</directory>
                                     <!--<directory>../../../wildfly-brian-no-servlet/ee-feature-pack/galleon-common/src/main/resources/</directory>-->
                                 </resource>
                             </resources>
@@ -424,7 +435,7 @@
                             <outputDirectory>${basedir}/target/resources</outputDirectory>
                             <resources>
                                 <resource>
-                                    <directory>${basedir}/target/resources-ee-content</directory>
+                                    <directory>${content.resources.directory}</directory>
                                     <!--<directory>../../../wildfly-brian-no-servlet/ee-feature-pack/galleon-feature-pack/src/main/resources/</directory>-->
                                 </resource>
                             </resources>
@@ -456,7 +467,8 @@
                                 <licensesConfigFile>${basedir}/target/resources/license/ee-feature-pack-legacy-licenses.xml</licensesConfigFile>
                             </licensesConfigFiles>
                             <licensesOutputFile>${license.directory}/full-feature-pack-licenses.xml</licensesOutputFile>
-                            <excludedArtifacts>infinispan-hibernate-cache-v51|jboss-ejb-client-legacy|wildfly-core-feature-pack-common|wildfly-core-feature-pack-ee-8-api|wildfly-core-feature-pack-galleon-common|wildfly-servlet-feature-pack-common|wildfly-servlet-feature-pack-ee-8-api|wildfly-servlet-feature-pack-galleon-common|wildfly-servlet-feature-pack-galleon-legacy|wildfly-ee-feature-pack-common|wildfly-ee-feature-pack-ee-8-api|wildfly-ee-feature-pack-galleon-common|wildfly-ee-feature-pack-pruned|wildfly-ee-feature-pack-content</excludedArtifacts>
+                            <excludedGroups>org.wildfly.galleon-plugins</excludedGroups>
+                            <excludedArtifacts>wildfly-jar-boot|infinispan-hibernate-cache-v51|jboss-ejb-client-legacy|wildfly-core-feature-pack-common|wildfly-core-feature-pack-ee-8-api|wildfly-core-feature-pack-galleon-common|wildfly-servlet-feature-pack-common|wildfly-servlet-feature-pack-ee-8-api|wildfly-servlet-feature-pack-galleon-common|wildfly-servlet-feature-pack-galleon-legacy|wildfly-ee-feature-pack-common|wildfly-ee-feature-pack-ee-8-api|wildfly-ee-feature-pack-galleon-common|wildfly-ee-feature-pack-pruned|wildfly-ee-feature-pack-galleon-content|wildfly-elytron\z</excludedArtifacts>
                         </configuration>
                     </execution>
                 </executions>
@@ -500,7 +512,7 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- module and copy artifact dependencies -->
+<!-- module and copy artifact dependencies -->
 
         <dependency>
             <groupId>org.wildfly.core</groupId>
@@ -524,68 +536,82 @@
         </dependency>
 
         <dependency>
-            <groupId>org.wildfly</groupId>
+            <groupId>${ee.maven.groupId}</groupId>
             <artifactId>wildfly-servlet-feature-pack-common</artifactId>
+            <version>${ee.maven.version}</version>
             <type>pom</type>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
-            <groupId>org.wildfly</groupId>
+            <groupId>${ee.maven.groupId}</groupId>
             <artifactId>wildfly-servlet-feature-pack-ee-8-api</artifactId>
+            <version>${ee.maven.version}</version>
             <type>pom</type>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
-            <groupId>org.wildfly</groupId>
+            <groupId>${ee.maven.groupId}</groupId>
             <artifactId>wildfly-servlet-feature-pack-galleon-common</artifactId>
+            <version>${ee.maven.version}</version>
             <type>pom</type>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
-            <groupId>org.wildfly</groupId>
+            <groupId>${ee.maven.groupId}</groupId>
             <artifactId>wildfly-servlet-feature-pack-galleon-legacy</artifactId>
+            <version>${ee.maven.version}</version>
             <type>pom</type>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
-            <groupId>org.wildfly</groupId>
+            <groupId>${ee.maven.groupId}</groupId>
             <artifactId>wildfly-ee-feature-pack-common</artifactId>
+            <version>${ee.maven.version}</version>
             <type>pom</type>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
-            <groupId>org.wildfly</groupId>
+            <groupId>${ee.maven.groupId}</groupId>
             <artifactId>wildfly-ee-feature-pack-ee-8-api</artifactId>
+            <version>${ee.maven.version}</version>
             <type>pom</type>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
-            <groupId>org.wildfly</groupId>
+            <groupId>${ee.maven.groupId}</groupId>
             <artifactId>wildfly-ee-feature-pack-galleon-common</artifactId>
-            <type>pom</type>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.wildfly</groupId>
-            <artifactId>wildfly-ee-feature-pack-pruned</artifactId>
+            <version>${ee.maven.version}</version>
             <type>pom</type>
             <scope>provided</scope>
         </dependency>
         
         <dependency>
-            <groupId>org.wildfly</groupId>
+            <groupId>${ee.maven.groupId}</groupId>
             <artifactId>wildfly-ee-feature-pack-galleon-content</artifactId>
+            <version>${ee.maven.version}</version>
+            <type>pom</type>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>${ee.maven.groupId}</groupId>
+            <artifactId>wildfly-ee-feature-pack-pruned</artifactId>
+            <version>${ee.maven.version}</version>
             <type>pom</type>
             <scope>provided</scope>
         </dependency>
        
+        <dependency>
+            <groupId>org.wildfly.core</groupId>
+            <artifactId>wildfly-cli</artifactId>
+            <version>14.0.0.Beta4</version>
+        </dependency>
     </dependencies>
         
     <profiles>

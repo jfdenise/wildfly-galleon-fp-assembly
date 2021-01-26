@@ -28,18 +28,24 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.wildfly</groupId>
-    <artifactId>wildfly-ee-feature-pack-assembly-parent</artifactId>
-    <description>Parent for building ee Galleon feature-pack and dist</description>
+    <artifactId>wildfly-feature-pack-assembly-parent</artifactId>
+    <description>Parent for building Galleon feature-pack and dist</description>
     <packaging>pom</packaging>
     <version>23.0.9.Final-SNAPSHOT</version>
     
     <properties>
-        <ee.maven.groupId>org.wildfly</ee.maven.groupId>
-        <ee.maven.version>23.0.0.Beta1-SNAPSHOT</ee.maven.version>
-        <ee.dist.product.release.name>WildFly Full (built from assembly)</ee.dist.product.release.name>
-        <ee.dist.product.release.version>${project.version}</ee.dist.product.release.version>
+        <full.dist.product.release.name>WildFly MP (built from assembly)</full.dist.product.release.name>
+        <full.dist.product.release.version>${project.version}</full.dist.product.release.version>
+        
+        <ee.maven.groupId>${project.groupId}</ee.maven.groupId>
+        <!-- relies on the ee built from the ee module -->
+        <ee.maven.version>23.0.9.Final-SNAPSHOT</ee.maven.version>
+        <full.maven.groupId>${project.groupId}</full.maven.groupId>
+        <full.maven.version>23.0.0.Beta1-SNAPSHOT</full.maven.version>
+        
         <server.output.dir.prefix>wildfly</server.output.dir.prefix>
         <server.output.dir.version>${project.version}</server.output.dir.version>
+        
         <version.org.wildfly.core>14.0.0.Final</version.org.wildfly.core>
         <version.org.wildfly.galleon-plugins>5.0.0.Final</version.org.wildfly.galleon-plugins>
         <version.org.jboss.galleon>4.2.7.Final</version.org.jboss.galleon>
@@ -49,16 +55,16 @@
     </properties>
     <modules>
         <module>galleon-feature-pack</module>
-        <module>ee-dist</module>
+        <module>dist</module>
     </modules>
 
     <dependencyManagement>
         <dependencies>
             <!-- must import before wildfy-core, wildfly-core defines some managed dependencies with scope test that breaks building FP. -->
             <dependency>
-                <groupId>${ee.maven.groupId}</groupId>
+                <groupId>${full.maven.groupId}</groupId>
                 <artifactId>wildfly-parent</artifactId>
-                <version>${ee.maven.version}</version>
+                <version>${full.maven.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -69,17 +75,24 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!-- the wildfly-ee-galleon-pack -->
+            <dependency>
+                <groupId>${ee.maven.groupId}</groupId>
+                <artifactId>wildfly-ee-galleon-pack</artifactId>
+                <version>${ee.maven.version}</version>
+                <type>zip</type>
+            </dependency>
             
             <!-- needed by dist -->
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>wildfly-ee-galleon-pack</artifactId>
+                <artifactId>wildfly-galleon-pack</artifactId>
                 <version>${project.version}</version>
                 <type>pom</type>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>wildfly-ee-galleon-pack</artifactId>
+                <artifactId>wildfly-galleon-pack</artifactId>
                 <version>${project.version}</version>
                 <type>zip</type>
             </dependency>
