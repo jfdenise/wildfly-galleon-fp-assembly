@@ -99,6 +99,11 @@
                                     <artifactId>wildfly-core-feature-pack-galleon-common</artifactId>
                                     <type>zip</type>
                                 </artifactItem>
+                                <artifactItem>
+                                    <groupId>org.wildfly.core</groupId>
+                                    <artifactId>wildfly-core-feature-pack-galleon-pruned</artifactId>
+                                    <type>zip</type>
+                                </artifactItem>
                             </artifactItems>
                             <!-- unpack in a given directory, to erase file timestamps. -->
                             <outputDirectory>${core.resources.directory}</outputDirectory>
@@ -468,7 +473,7 @@
                             </licensesConfigFiles>
                             <licensesOutputFile>${license.directory}/full-feature-pack-licenses.xml</licensesOutputFile>
                             <excludedGroups>org.wildfly.galleon-plugins</excludedGroups>
-                            <excludedArtifacts>wildfly-jar-boot|infinispan-hibernate-cache-v51|jboss-ejb-client-legacy|wildfly-core-feature-pack-common|wildfly-core-feature-pack-ee-8-api|wildfly-core-feature-pack-galleon-common|wildfly-servlet-feature-pack-common|wildfly-servlet-feature-pack-ee-8-api|wildfly-servlet-feature-pack-galleon-common|wildfly-servlet-feature-pack-galleon-legacy|wildfly-ee-feature-pack-common|wildfly-ee-feature-pack-ee-8-api|wildfly-ee-feature-pack-galleon-common|wildfly-ee-feature-pack-pruned|wildfly-ee-feature-pack-galleon-content|wildfly-elytron\z</excludedArtifacts>
+                            <excludedArtifacts>wildfly-jar-boot|infinispan-hibernate-cache-v51|jboss-ejb-client-legacy|wildfly-core-feature-pack-common|wildfly-core-feature-pack-ee-8-api|wildfly-core-feature-pack-galleon-common|wildfly-core-feature-pack-galleon-pruned|wildfly-servlet-feature-pack-common|wildfly-servlet-feature-pack-ee-8-api|wildfly-servlet-feature-pack-galleon-common|wildfly-servlet-feature-pack-galleon-legacy|wildfly-ee-feature-pack-common|wildfly-ee-feature-pack-ee-8-api|wildfly-ee-feature-pack-galleon-common|wildfly-ee-feature-pack-pruned|wildfly-ee-feature-pack-galleon-content|wildfly-elytron\z</excludedArtifacts>
                         </configuration>
                     </execution>
                 </executions>
@@ -531,6 +536,13 @@
         <dependency>
             <groupId>org.wildfly.core</groupId>
             <artifactId>wildfly-core-feature-pack-galleon-common</artifactId>
+            <type>pom</type>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.wildfly.core</groupId>
+            <artifactId>wildfly-core-feature-pack-galleon-pruned</artifactId>
             <type>pom</type>
             <scope>provided</scope>
         </dependency>
@@ -677,12 +689,15 @@
                                                 transitives. Those poms ban transitives at their level -->
                                                 <exclude>org.wildfly.core:wildfly-core-feature-pack-common</exclude>
                                                 <exclude>org.wildfly.core:wildfly-core-feature-pack-ee-8-api</exclude>
-                                                <exclude>org.wildfly:wildfly-servlet-feature-pack-common</exclude>
-                                                <exclude>org.wildfly:wildfly-servlet-feature-pack-ee-8-api</exclude>
-                                                <exclude>org.wildfly:wildfly-ee-feature-pack-common</exclude>
-                                                <exclude>org.wildfly:wildfly-ee-feature-pack-ee-8-api</exclude>
-                                                <exclude>org.wildfly:wildfly-ee-feature-pack-pruned</exclude>
-                                                <exclude>org.wildfly:wildfly-ee-feature-pack-galleon-content</exclude>
+                                                <exclude>org.wildfly.core:wildfly-core-feature-pack-galleon-pruned</exclude>
+                                                <exclude>org.wildfly.core:wildfly-core-feature-pack-galleon-common</exclude>
+                                                <exclude>${ee.maven.groupId}:wildfly-servlet-feature-pack-common</exclude>
+                                                <exclude>${ee.maven.groupId}:wildfly-servlet-feature-pack-ee-8-api</exclude>
+                                                <exclude>${ee.maven.groupId}:wildfly-servlet-feature-pack-galleon-legacy</exclude>
+                                                <exclude>${ee.maven.groupId}:wildfly-ee-feature-pack-common</exclude>
+                                                <exclude>${ee.maven.groupId}:wildfly-ee-feature-pack-ee-8-api</exclude>
+                                                <exclude>${ee.maven.groupId}:wildfly-ee-feature-pack-pruned</exclude>
+                                                <exclude>${ee.maven.groupId}:wildfly-ee-feature-pack-galleon-content</exclude>
                                             </excludes>
                                         </banTransitiveDependencies>
                                     </rules>
